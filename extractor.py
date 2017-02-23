@@ -5,7 +5,7 @@ import json
 import requests
 
 UA_PC = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
-UA_MOB = "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5",
+UA_MOB = "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5"
 
 miaopai_code_re = re.compile(r"http://www.miaopai.com/show/(.*?)__\.htm")
 miaopai_template = "http://gslb.miaopai.com/stream/{}__.mp4"
@@ -15,6 +15,9 @@ bilibili_api = "http://api.bilibili.com/playurl?aid={}&page=1&platform=html5&qua
 
 xiaokaxiu_code_re = re.compile(r"http://v.xiaokaxiu.com/v/(.*?)__\.html")
 xiaokaxiu_template = miaopai_template
+
+weiboi_url_re = re.compile(r"video_src=(.*?)&")
+
 
 def miaopai(url):
     code = miaopai_code_re.findall(url)
@@ -51,7 +54,13 @@ def xiaokaxiu(url):
     return result
 
 
+def weibo(url):
+    cookies = requests.get("http://www.weibo.com").cookies
+    content = requests.get(url,headers={"User-Agent":UA_PC},cookies=cookies).content
+    print content
+    result = weiboi_url_re.findall(content)
+    return result
 
 
 if __name__ == "__main__":
-    print xiaokaxiu("http://v.xiaokaxiu.com/v/PATgLpiDaEakLkdRmhYnGg__.html")
+    print weibo("http://weibo.com/tv/v/Eg0cFd6Ia")
