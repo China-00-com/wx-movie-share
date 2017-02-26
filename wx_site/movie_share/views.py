@@ -8,7 +8,7 @@ from .models import Movie
 def movie_list(request):
     movies = Movie.objects.filter(publish_date__lte=timezone.now()).order_by('publish_date')
     return render(request,
-                  'movie_list.html',
+                  'base.html',
                   {
                       "movies" :movies
                   })
