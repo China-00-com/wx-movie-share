@@ -1,0 +1,62 @@
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>  爱乐之城  </title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="format-detection" content="telephone=no"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="shortcut icon" type="image/png" href="images/icon.png" media="screen" /><link rel="stylesheet" href="lib/css/core.css" />
+
+
+	<link rel="stylesheet" href="css/mplay.css" />
+
+
+</head>
+<body>
+
+<div class="favor-site-wrapper fixed-top">
+	<div class="favor-site">
+		<i class="fa fa-weixin" aria-hidden="true"></i>
+		<span>老司机微信看片不迷路，快点我</span>
+		<div class="favor-guider">
+			<i class="fa fa-hand-o-right" aria-hidden="true"></i>
+			<a class="favor-btn favor__me" href="javascript:">收藏</a>
+		</div>
+	</div>
+</div><div class="content"><div class="page navbar"><div class="weui-tab"><div class="weui-tab__panel movie-container"><div class="watch-warning"><div class="tips">为防止域名被封失联，请记得点击上方收藏</div><div class="tips">由于部分影片失效，正在逐步修复中</div></div><div class="watch-movie"><iframe id="play-container" src="play?url=CMTA0MTk3ODQ=~ykyun"></iframe></div><div class="watch-skill"><div class="dont-charge" style="display:none">上方广告，请勿充值</div><div class="skill-tip">加载需要时间(20-30秒)请耐心等待,无法播放请刷新页面</div><div class="skill-tip">为了更好的给大家提供精彩内容~,请关注我们哦~</div></div><div class="movie-list"><ul><li class="current"><a href="mplay?mid=4760&plid=0">TS</a></li></ul></div><div class="oper_panel"><div class="oper-item"><a href="./" class="weui-btn weui-btn weui-btn_primary">网站首页</a></div><div class="oper-item" data-role="do-report"><a class="weui-btn weui-btn weui-btn_primary">报错/求片</a></div><div class="oper-item" data-role="look-more" data-src="wechat_redirect"><a class="weui-btn weui-btn weui-btn_primary">更多精彩</a></div></div></div></div></div><div class="weui-footer ">
+	<p class="weui-footer__text">电影采集自互联网，影片仅供测试和学习交流</p>
+	<p class="weui-footer__text">请大家支持正版，我们正在删除有关版权的视频</p>
+	<!--
+    	<p class="weui-footer__text">Copyright &copy; 2016 爱乐之城</p>
+	<p class="weui-footer__links">
+		<a href="javascript:void(0);" class="weui-footer__link">投诉举报</a>
+	</p>
+	-->
+</div></div><div class="report_dialog" style="display:none"><div class="weui-mask"></div><div class="weui-dialog"><div class="weui-dialog__bd"><div style="text-align:center"><img src="http://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=180&__biz=MzA3MTU0NDM5OQ=="></div><div><span>扫码上方二维码可进行求片，也可在微信上进行报错，小影会在第一时间进行修复。</span></div></div><div class="weui-dialog__ft"><a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a></div></div></div><div class="mask-window closable">
+	<div class="tips">长按二维码，扫码永久收藏本站</div>
+	<i class="fa fa-close close__window"></i>
+	<div class="inner__wrapper align-center">
+		<div class="favor-qrcode"><img src="http://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=180&__biz=MzA3MTU0NDM5OQ=="></div>
+	</div>
+</div>
+
+
+
+
+<!-- 底部脚本 --><script src="http://sdk.talkingdata.com/app/h5/v1?appid=268370BBAB004166A7B97141F2E19C4C&vn=zxdy-V0.1.1&vc=16.11.1501"></script><script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" id="jweixin"></script><script type="text/javascript" src="lib/js/core.js" id="seajsnode"></script><script type="text/javascript"><!--
+	seajs.config({
+		base: "./js",
+		alias:{
+			"jqmobile":"./lib/js/core-jqms"
+		}
+	});
+	seajs.use("jweixin/main", function(jWeixin){jWeixin.init();window.jWeixin=jWeixin;});
+	//--></script>
+
+	<script type="text/javascript">
+		seajs.use("mplay/main", function(main){main.init();});
+	</script>
+
+</body>
+</html>

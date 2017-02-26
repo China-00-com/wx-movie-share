@@ -1,0 +1,40 @@
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>  最新免费高清电影  </title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="format-detection" content="telephone=no"/><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="shortcut icon" type="image/png" href="images/icon.png" media="screen" /><link rel="stylesheet" href="lib/css/core.css" />
+
+
+	<link rel="stylesheet" href="css/player.css" />
+
+
+	<script type="text/javascript" src="player/ckplayer/ckplayer.js"></script>
+
+</head>
+<body>
+
+
+<div id="xplayer" data-token="a58e5ee24eca27f3622cf0eff304e6f0" data-code="0"></div>
+
+
+
+<!-- 底部脚本 --><script src="http://sdk.talkingdata.com/app/h5/v1?appid=268370BBAB004166A7B97141F2E19C4C&vn=zxdy-V0.1.1&vc=16.11.1501"></script><script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" id="jweixin"></script><script type="text/javascript" src="lib/js/core.js" id="seajsnode"></script><script type="text/javascript"><!--
+	seajs.config({
+		base: "./js",
+		alias:{
+			"jqmobile":"./lib/js/core-jqms"
+		}
+	});
+	seajs.use("jweixin/main", function(jWeixin){jWeixin.init();window.jWeixin=jWeixin;});
+	//--></script>
+
+	<script type="text/javascript">
+		seajs.use("player/main", function(main){main.init();});
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+define("jweixin/main",[],function(require,exports){var n=function(){var n=seajs.data.base;n=n.substr(0,n.lastIndexOf("js/"));var i=window.location.href,a=i.indexOf("#");a>=0&&(i=i.substr(0,a))};exports.init=n});
