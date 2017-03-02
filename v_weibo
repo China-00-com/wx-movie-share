@@ -1,5 +1,6 @@
 """
 微博  视频抓取
+http://fuliba.net/weibovideo.html
 """
 
 import re
