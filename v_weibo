@@ -1,0 +1,112 @@
+"""
+微博  视频抓取
+"""
+
+import re
+from base import VideoBase
+from utils import *
+from urlparse import urljoin
+from urllib import unquote_plus
+try:
+    import cPickle as pickle
+except:
+    import pickle
+
+
+class VWeibo(VideoBase):
+    SOURCE = "微博"
+    SOURCE_ICON = None
+    LIST_URL = None
+    session = requests.Session()
+    headers = None
+    video_url_re = re.compile(r'video_src=(.*?)&playerType')
+    pkls = [
+        "pkls/41488bd76ac6ca8c58602e7680a9da52.pkl",
+        "pkls/b74fb2a9635aba6490153a4f99d3bf9d.pkl"
+    ]
+
+    EXTRACT_CONFIG = {
+        "detail_url": {
+            "attribute": "href",
+            "method": "select"
+        },
+        "title": {
+            "params": {
+                "selector": "div.txt_cut"
+            },
+            "method": "select"
+        },
+        "user_name": {
+            "params": {
+                "selector": "div.item_a"
+            },
+            "method": "select"
+        },
+        "user_avatar": {
+            "attribute": "src",
+            "params": {
+                "selector": "img.face_pho"
+            },
+            "method": "select"
+        },
+        "thumbnail":{
+            "attribute": "src",
+            "params": {
+                "selector": "img.piccut"
+            },
+            "method": "select"
+        },
+        "list": {
+            "params": {
+                "selector": "div.weibo_tv_frame > ul.li_list_1 > a"
+            },
+            "method": "select"
+        }
+    }
+
+    def __init__(self,lisurl):
+        super(VWeibo,self).__init__(lisurl)
+        pkl_name = random.choice(self.pkls)
+        pkl_file = file(pkl_name, 'rb')
+        user = pickle.load(pkl_file)
+        pkl_file.close()
+        self.session = user["session"]
+        self.headers = user["headers"]
+
+    def _parse_fields(self, tag, params):
+        if params.get("params"):
+            tag = find_tag(tag, params)
+        attribute = params.get("attribute", "text")
+        return extract_tag_attribute(tag, attribute)
+
+    def get_list(self):
+        content = self.session.get(url=self.LIST_URL).content
+        if not content:
+            return []
+        soup = get_soup(content)
+        tags = find_tags(soup, param=self.EXTRACT_CONFIG["list"])
+        items = list()
+        for tag in tags:
+            item = {k: self._parse_fields(tag, v) for k, v in self.EXTRACT_CONFIG.items() if k != "list"}
+            items.append(item)
+        return items
+
+    def get_detail(self, item):
+        doc = self.build_doc()
+        doc["docid"] = urljoin("http://weibo.com",item['detail_url'])
+        content = self.session.get(doc["docid"]).content
+        if not content:return dict()
+        video_urls = self.video_url_re.findall(content)
+        if not video_urls:return dict()
+        video_url = unquote_plus(video_urls[0])
+        doc["title"] = item['title']
+        doc["ctime"] = format_time()
+        doc["ptime"] = format_time()
+        doc["docid"] = urljoin("http://weibo.com",item['detail_url'])
+        doc["pname"] = item["user_name"]
+        doc["videourl"] = video_url
+        doc["thumbnail"] = item['thumbnail']
+        doc["duration"] = 0
+        doc["icon"] = item["user_avatar"]
+        return doc
+
