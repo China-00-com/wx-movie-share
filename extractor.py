@@ -5,6 +5,7 @@ import json
 import random
 import requests
 from urllib import unquote_plus
+from urlparse import urljoin
 
 try:
     import cPickle as pickle
@@ -27,6 +28,11 @@ weibo_url_re = re.compile(r'video_src=(.*?)&playerType')
 
 
 def miaopai(url):
+    """
+    秒拍
+    :param url:
+    :return:
+    """
     code = miaopai_code_re.findall(url)
     if code is None:
         return None
@@ -35,6 +41,12 @@ def miaopai(url):
 
 
 def bilibili(url):
+    """
+    bilibili （有时能用，有时不能用）
+    :param url:
+    :return:
+    """
+
     headers = {"user-agent": UA_PC}
     cookies = requests.get(url, headers=headers).cookies
     code = bilibili_code_re.findall(url)
@@ -53,6 +65,11 @@ def bilibili(url):
 
 
 def xiaokaxiu(url):
+    """
+    小咖秀
+    :param url:
+    :return:
+    """
     code = xiaokaxiu_code_re.findall(url)
     if code == []:
         return None
@@ -61,6 +78,12 @@ def xiaokaxiu(url):
 
 
 def weibo(url):
+    """
+    微博视频 weibo
+    :param url:
+    :return:
+    """
+
     pkls = [
         "41488bd76ac6ca8c58602e7680a9da52.pkl",
         "b74fb2a9635aba6490153a4f99d3bf9d.pkl"
@@ -81,11 +104,39 @@ def weibo(url):
 
 
 def kankannews(url):
+    """
+    看看新闻 kankannews.com
+    :param url:
+    :return:
+    """
     kankannews_re = re.compile(r'mp4 : \"(.*?)\"')
     content = requests.get(url).content
     result = kankannews_re.findall(content)
     return result[0]
 
 
+def aipai(url):
+    """
+    爱拍游戏 aipai.com  http://www.aipai.com/c1/PTk4NiAhbiFoLSc.html
+    """
+    aipai_url_re = re.compile(r'\"info=(.*?)&amp;avatarName')
+    content = requests.get(url).content
+    text = aipai_url_re.findall(content)[0]
+    text = unquote_plus(text)
+    print text
+    json_data = json.loads(text)
+    print json_data
+    print json_data
+    video_info = json_data["work"]
+    videos = []
+    try:
+        videos.append(urljoin(video_info["baseURL"], video_info["flvFileName"]))
+        videos.append(urljoin(video_info["baseURL"], video_info["flvFileName480"]))
+        videos.append(urljoin(video_info["baseURL"], video_info["flvFileName1080"]))
+    except:
+        pass
+    return list(set(videos))
+
+
 if __name__ == "__main__":
-    print kankannews("http://m.kankanews.com/n/1_1265955.html?utm_source=Else")
+    print aipai("http://www.aipai.com/c1/PTk4NiAhbiFoLSc.html")
