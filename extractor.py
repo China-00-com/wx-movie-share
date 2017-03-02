@@ -5,11 +5,11 @@ import json
 import random
 import requests
 from urllib import unquote_plus
+
 try:
     import cPickle as pickle
 except:
     import pickle as pickle
-
 
 UA_PC = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
 UA_MOB = "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5"
@@ -35,7 +35,6 @@ def miaopai(url):
 
 
 def bilibili(url):
-
     headers = {"user-agent": UA_PC}
     cookies = requests.get(url, headers=headers).cookies
     code = bilibili_code_re.findall(url)
@@ -55,7 +54,7 @@ def bilibili(url):
 
 def xiaokaxiu(url):
     code = xiaokaxiu_code_re.findall(url)
-    if code ==[]:
+    if code == []:
         return None
     result = xiaokaxiu_template.format(code[0])
     return result
@@ -74,14 +73,19 @@ def weibo(url):
     session = user["session"]
     headers = user["headers"]
     content = session.get(url).content
-    if not content:return None
+    if not content: return None
     video_urls = weibo_url_re.findall(content)
-    if not video_urls:return None
+    if not video_urls: return None
     video_url = unquote_plus(video_urls[0])
     return video_url
 
 
+def kankannews(url):
+    kankannews_re = re.compile(r'mp4 : \"(.*?)\"')
+    content = requests.get(url).content
+    result = kankannews_re.findall(content)
+    return result[0]
 
 
 if __name__ == "__main__":
-    print weibo("http://weibo.com/tv/v/Eg0cFd6Ia")
+    print kankannews("http://m.kankanews.com/n/1_1265955.html?utm_source=Else")
